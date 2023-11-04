@@ -1,8 +1,6 @@
 package com.simplytodo.entity;
 
 import com.simplytodo.enums.TodoTaskStatus;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TodoTask {
