@@ -13,7 +13,7 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/task/:id")
+    @GetMapping("/task/{id}")
     public TodoTask getTask(@PathVariable int id){
         return todoService.getTask(id);
     }
@@ -23,13 +23,18 @@ public class TodoController {
         return todoService.getAllTasks();
     }
 
-    @DeleteMapping("/task/:id")
+    @DeleteMapping("/task/{id}")
     public void deleteTask(@PathVariable int id){
         todoService.delete(id);
     }
 
     @PostMapping("/task")
     public TodoTask createTask(@RequestBody TodoTask todoTask){
+        return todoService.createOrUpdate(todoTask);
+    }
+
+    @PatchMapping("/task")
+    public TodoTask updateTask(@RequestBody TodoTask todoTask){
         return todoService.createOrUpdate(todoTask);
     }
 }
