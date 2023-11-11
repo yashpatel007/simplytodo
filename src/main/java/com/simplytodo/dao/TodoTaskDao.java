@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TodoTaskDao {
+public class TodoTaskDao{
     private final String DB_URL = "jdbc:postgresql://localhost:5432/simplytodo";
     private final String USERNAME = "admin";
     private final String Password = "mypassword";
@@ -19,6 +19,7 @@ public class TodoTaskDao {
 
     public TodoTaskDao() throws SQLException {
         connection = DriverManager.getConnection(DB_URL, USERNAME, Password);
+        this.CheckAndCreateTable();
     }
 
     public TodoTask getTask(int id) throws TodoException {
@@ -96,7 +97,7 @@ public class TodoTaskDao {
             statement.setString(1, todoTask.getTitle());
             statement.setString(2, todoTask.getDescription());
             statement.setString(3, todoTask.getStatus().toString());
-            statement.setDate(4, new java.sql.Date(todoTask.getDueDate().getTime()));
+            statement.setDate(4,todoTask.getDueDate() !=null? new java.sql.Date(todoTask.getDueDate().getTime()): null);
             statement.setDate(5, new java.sql.Date(todoTask.getCreatedAt().getTime()));
 
             // update the DB
@@ -105,5 +106,14 @@ public class TodoTaskDao {
             throw new TodoException(TodoErrorStatus.BAD_REQUEST, e.getMessage());
         }
         return todoTask;
+    }
+
+    private void CheckAndCreateTable() throws SQLException {
+        var dbMetaData = this.connection.getMetaData();
+        var tables = dbMetaData.getTables(null, null, "todo_task", null);
+        if(!tables.next()){
+            var createTableStatement = this.connection.prepareStatement("CREATE TABLE todo_task (id SERIAL PRIMARY KEY, title VARCHAR(255), description VARCHAR(255), status VARCHAR(255), due_date DATE, created_at DATE)");
+            createTableStatement.executeUpdate();
+        }
     }
 }
