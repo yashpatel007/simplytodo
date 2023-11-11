@@ -11,10 +11,8 @@ public class TodoTask {
     @Setter(AccessLevel.NONE)
     private static int idCounter = 0;
 
-    @Setter(AccessLevel.NONE)
     private int id = idCounter++;
 
-    @NonNull
     private String title;
     private String description;
     private TodoTaskStatus status = TodoTaskStatus.NOT_STARTED;

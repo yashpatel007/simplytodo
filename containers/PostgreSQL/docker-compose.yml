@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest # use latest postgres image
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: simplytodo
+    volumes:
+      # this volume is in host machine and will not be destroyed with container, replcae (./volume) with your own path of volume if needed
+      - ./volume:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data # this volume is in container and will be detroyed with container
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_data:
