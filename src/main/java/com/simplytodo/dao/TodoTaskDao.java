@@ -4,6 +4,8 @@ import com.simplytodo.entity.TodoTask;
 import com.simplytodo.enums.TodoTaskStatus;
 import com.simplytodo.errors.TodoErrorStatus;
 import com.simplytodo.errors.TodoException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -11,10 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Profile("notused")
+//@ConditionalOnProperty(name = "spring.datasource.driverClassName", havingValue = "org.postgresql.Driver")
+@Deprecated
 public class TodoTaskDao{
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/simplytodo";
-    private final String USERNAME = "admin";
-    private final String Password = "mypassword";
+    @Value("${spring.datasource.url}")
+    private String DB_URL;
+    @Value("${spring.datasource.username}")
+    private String USERNAME;
+    @Value("${spring.datasource.password}")
+    private String Password;
+
     Connection connection = null;
 
     public TodoTaskDao() throws SQLException {
@@ -35,10 +44,10 @@ public class TodoTaskDao{
                 TodoTask todoTask = new TodoTask();
                 todoTask.setId(resultSet.getInt("id"));
                 todoTask.setTitle(resultSet.getString("title"));
-                todoTask.setDescription(resultSet.getString("description"));
+                //todoTask.setDescription(resultSet.getString("description"));
                 todoTask.setStatus(TodoTaskStatus.valueOf(resultSet.getString("status")));
                 todoTask.setDueDate(resultSet.getDate("due_date"));
-                todoTask.setCreatedAt(resultSet.getDate("created_at"));
+                //todoTask.setCreatedAt(resultSet.getDate("created_at"));
                 tasks.add(todoTask);
             }
             return tasks.size()>0 ? tasks.get(0): null;
@@ -59,10 +68,10 @@ public class TodoTaskDao{
                 TodoTask todoTask = new TodoTask();
                 todoTask.setId(resultSet.getInt("id"));
                 todoTask.setTitle(resultSet.getString("title"));
-                todoTask.setDescription(resultSet.getString("description"));
+                //todoTask.setDescription(resultSet.getString("description"));
                 todoTask.setStatus(TodoTaskStatus.valueOf(resultSet.getString("status")));
                 todoTask.setDueDate(resultSet.getDate("due_date"));
-                todoTask.setCreatedAt(resultSet.getDate("created_at"));
+                //todoTask.setCreatedAt(resultSet.getDate("created_at"));
                 tasks.add(todoTask);
             }
             return tasks;
@@ -95,10 +104,10 @@ public class TodoTaskDao{
 
             // set vars
             statement.setString(1, todoTask.getTitle());
-            statement.setString(2, todoTask.getDescription());
+            //statement.setString(2, todoTask.getDescription());
             statement.setString(3, todoTask.getStatus().toString());
             statement.setDate(4,todoTask.getDueDate() !=null? new java.sql.Date(todoTask.getDueDate().getTime()): null);
-            statement.setDate(5, new java.sql.Date(todoTask.getCreatedAt().getTime()));
+            //statement.setDate(5, new java.sql.Date(todoTask.getCreatedAt().getTime()));
 
             // update the DB
             statement.executeUpdate();

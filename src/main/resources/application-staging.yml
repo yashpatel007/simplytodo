@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/simplytodo
+    username: admin
+    password: mypassword
+  data:
+    mongodb:
+      uri: mongodb+srv://simplytodo-app-user:{MONGO_PASSWORD}@cluster0.cm64xq4.mongodb.net/simplytodo?retryWrites=true&w=majority
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

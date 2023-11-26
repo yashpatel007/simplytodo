@@ -1,0 +1,9 @@
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+spring:
+  profiles:
+    active: dev # by default use dev profile # pass -Dspring.profiles.active="your-profile" to chnage it.
