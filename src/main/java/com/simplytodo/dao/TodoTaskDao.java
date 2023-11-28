@@ -42,11 +42,11 @@ public class TodoTaskDao{
             while(resultSet.next()){
                 // map the response (manually)
                 TodoTask todoTask = new TodoTask();
-                todoTask.setId(resultSet.getInt("id"));
-                todoTask.setTitle(resultSet.getString("title"));
+                //todoTask.setId(resultSet.getInt("id"));
+                //todoTask.setTitle(resultSet.getString("title"));
                 //todoTask.setDescription(resultSet.getString("description"));
-                todoTask.setStatus(TodoTaskStatus.valueOf(resultSet.getString("status")));
-                todoTask.setDueDate(resultSet.getDate("due_date"));
+                //todoTask.setStatus(TodoTaskStatus.valueOf(resultSet.getString("status")));
+                //todoTask.setDueDate(resultSet.getDate("due_date"));
                 //todoTask.setCreatedAt(resultSet.getDate("created_at"));
                 tasks.add(todoTask);
             }
@@ -66,11 +66,11 @@ public class TodoTaskDao{
             while(resultSet.next()){
                 // map the response (manually)
                 TodoTask todoTask = new TodoTask();
-                todoTask.setId(resultSet.getInt("id"));
+                /*todoTask.setId(resultSet.getInt("id"));
                 todoTask.setTitle(resultSet.getString("title"));
                 //todoTask.setDescription(resultSet.getString("description"));
                 todoTask.setStatus(TodoTaskStatus.valueOf(resultSet.getString("status")));
-                todoTask.setDueDate(resultSet.getDate("due_date"));
+                todoTask.setDueDate(resultSet.getDate("due_date"));*/
                 //todoTask.setCreatedAt(resultSet.getDate("created_at"));
                 tasks.add(todoTask);
             }
@@ -103,11 +103,11 @@ public class TodoTaskDao{
             statement = connection.prepareStatement("INSERT INTO todo_task (title, description, status, due_date, created_at) VALUES (?, ?, ?, ?, ?)");
 
             // set vars
-            statement.setString(1, todoTask.getTitle());
+            /*statement.setString(1, todoTask.getTitle());
             //statement.setString(2, todoTask.getDescription());
             statement.setString(3, todoTask.getStatus().toString());
             statement.setDate(4,todoTask.getDueDate() !=null? new java.sql.Date(todoTask.getDueDate().getTime()): null);
-            //statement.setDate(5, new java.sql.Date(todoTask.getCreatedAt().getTime()));
+            //statement.setDate(5, new java.sql.Date(todoTask.getCreatedAt().getTime()));*/
 
             // update the DB
             statement.executeUpdate();

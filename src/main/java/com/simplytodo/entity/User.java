@@ -35,8 +35,6 @@ public class User {
     @Phone(message = "Invalid phone number")
     private String phone;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<TodoTask> tasks = new ArrayList<>();
+    @Transient // this field will not be persisted in the database
+    private List<TodoTask> tasks;
 }

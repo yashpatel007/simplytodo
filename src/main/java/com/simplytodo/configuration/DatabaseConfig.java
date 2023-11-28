@@ -1,9 +1,12 @@
 package com.simplytodo.configuration;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
@@ -23,6 +26,9 @@ public class DatabaseConfig {
     @Value("${spring.datasource.password}")
     private String password;
 
+    @Value("${spring.data.mongodb.uri}")
+    private String mongoURI;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -41,5 +47,15 @@ public class DatabaseConfig {
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public MongoClient mongoClient() {
+        return MongoClients.create(mongoURI);
+    }
+
+    @Bean
+    public MongoTemplate mongoTemplate() {
+        return new MongoTemplate(mongoClient(), "simplytodo");
     }
 }

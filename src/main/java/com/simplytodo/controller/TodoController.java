@@ -49,4 +49,10 @@ public class TodoController {
     public TodoTask updateTask(@RequestBody TodoTask todoTask) throws TodoException {
         return todoService.createOrUpdate(todoTask);
     }
+
+    @GetMapping("/tasks/{user_id}/{title}")
+    public List<TodoTask> getAllTasksbytitleForuser(@PathVariable long user_id, @PathVariable String title) throws TodoException {
+        return todoService.getAllTasksbytitleForuser(user_id, title);
+    }
+
 }
